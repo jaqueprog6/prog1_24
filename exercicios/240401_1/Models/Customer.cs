@@ -12,7 +12,11 @@ namespace _240401_1.Models
         public string EmailAddress {get; set;} = "Não definido";
         public List<Address> Addresses {get; set;} = new List<Address>();
 
-        public override void ToString() {
+        public string PrintToExportDelimited(){
+            return $"{CustomerId};{Name};{EmailAddress}";
+        }
+
+        public override string ToString() {
             return $"{CustomerId} - {Name} - {EmailAddress}";
         }
     }   

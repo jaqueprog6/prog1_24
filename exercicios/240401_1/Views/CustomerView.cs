@@ -29,6 +29,8 @@ namespace _240401_1.Views
                 Console.WriteLine("1 - Inserir Consumidor");
                 Console.WriteLine("2 - Pesquisar Consumidor");
                 Console.WriteLine("3 - Listar Consumidores");
+                Console.WriteLine("4 - Exportar dados delimitados");
+                Console.WriteLine("5 - Importar dados delimitados");
                 Console.WriteLine("0 - Sair");
 
                 int menu = 0;
@@ -43,8 +45,22 @@ namespace _240401_1.Views
                             InsertCustomer();
                         break;
                         case 2:
+                            SearchCustomer();
                         break;
                         case 3:
+                            ListCustomers();
+                        break;
+                        case 4:
+                            if (customerController.ExportDelimited()){
+                                Console.WriteLine("Arquivo gerado com sucesso!");
+                            }
+
+                            else {
+                                Console.WriteLine("Falha ao gerar arquivo.");
+                            }
+                        break;
+                        case 5:
+                            ImportFromDelimited();
                         break;
                         default:
                             Console.WriteLine("Opção Inválida.");
@@ -62,6 +78,18 @@ namespace _240401_1.Views
             while (aux);
         }
         
+        private void ImportFromDelimited(){
+            Console.WriteLine("Informe o caminho do arquivo");
+            string pathFile = Console.ReadLine();
+
+            Console.WriteLine("Informe o caracter delimitador");
+            string delimiter = Console.ReadLine();
+
+            string response = customerController.ImportDelimited(pathFile, delimiter);
+
+            Console.WriteLine(response);
+
+        }
         private void InsertCustomer() {
             Console.WriteLine("***********************");
             Console.WriteLine("INSERIR NOVO CONSUMIDOR");
@@ -170,18 +198,36 @@ namespace _240401_1.Views
             Console.Writeline("Não encontrado!");
             return;
         }
-        if(result.Count == 0) {
-            Console.WriteLine("Não encontrado!");
+        else {
+            Console.WriteLine("Lista de consumidores");
+             foreach (Customer customer in result){
+            PrintCustomerData(customer);
+        }
 
         }
-    }
-
-        foreach (Customer customer in result){
-            Console.WriteLine(Customer.ToString)
-        }
-    {
         
+    }   
+    private void PrintCustomerData(Customer customer){
+        Console.WriteLine(Customer.ToString());
     }
+    
+    
+    private void ListCustomers() {
+            List<Customer> result = customerController.Get();
+            if (result == null || result?.Count == 0) {
+                Console.WriteLine("Não encontrado!");
+                return;
+            }
+
+            if (result.Count == 0) {
+                Console.WriteLine("Não encontrado!");
+                return;
+            }
+
+            foreach (Customer customer in result) {
+                Console.WriteLine(customer.ToString());
+            }
+        }
   }
  
  }
