@@ -19,7 +19,7 @@ namespace _240318_1.Models
     }
 
     public enum AddressType{
-        Comercial,
+        Commercial,
         Residential
     }
     
